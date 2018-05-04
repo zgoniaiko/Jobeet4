@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
+ * @ORM\Table(name="jobs")
  */
 class Job
 {
@@ -18,6 +19,7 @@ class Job
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="jobs")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
      */
     private $category;
 

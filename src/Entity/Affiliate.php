@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AffiliateRepository")
+ * @ORM\Table(name="affiliates")
  */
 class Affiliate
 {
@@ -45,6 +46,7 @@ class Affiliate
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="affiliates")
+     * @ORM\JoinTable(name="affiliates_categories")
      */
     private $categories;
 
