@@ -22,10 +22,4 @@ class LoadFixtures extends Fixture
 
         $manager->flush();
     }
-
-    public function getId(): string
-    {
-        
-    }
-
 }
