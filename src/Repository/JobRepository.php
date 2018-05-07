@@ -31,6 +31,22 @@ class JobRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param int $id
+     *
+     * @return Job|null
+     */
+    public function findActiveJob(int $id): ?Job
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.id = :id')
+            ->andWhere('j.expiresAt > :expiryAt')
+            ->setParameter('id', $id)
+            ->setParameter('expiryAt', new \DateTime())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Job[] Returns an array of Job objects
 //     */

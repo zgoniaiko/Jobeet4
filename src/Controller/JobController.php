@@ -53,6 +53,8 @@ class JobController extends Controller
     /**
      * @Route("/{id}", name="job_show", methods="GET", requirements={"id" = "\d+"})
      * @View\Template()
+     *
+     * @View\Entity("job", expr="repository.findActiveJob(id)")
      */
     public function show(Job $job): array
     {
