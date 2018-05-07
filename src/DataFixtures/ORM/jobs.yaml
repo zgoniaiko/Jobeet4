@@ -44,3 +44,16 @@ App\Entity\Job:
         activated:    true
         token:        job_extreme_sensio
         email:        job@example.com
+
+    expired_job:
+        category:       '@programming'
+        company:        Sensio Labs
+        position:       Web Developer
+        location:       Paris, France
+        description:    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        how_to_apply:   Send your resume to lorem.ipsum \[at] dolor.sit
+        public:         true
+        activated:      true
+        token:          job_expired
+        email:          job@example.com
+        expiresAt:     '<dateTimeBetween("-200 days", "-10 days")>'
