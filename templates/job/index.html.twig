@@ -10,7 +10,7 @@
             <th class="active text-center">Company</th>
         </tr>
 
-        {% for job in category.activeJobs|slice(0, 10) %}
+        {% for job in category.activeJobs|slice(0, max_jobs_on_homepage) %}
             <tr>
                 <td>{{ job.location }}</td>
                 <td>
