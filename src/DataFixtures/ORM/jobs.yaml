@@ -57,3 +57,15 @@ App\Entity\Job:
         token:          job_expired
         email:          job@example.com
         expiresAt:     '<dateTimeBetween("-200 days", "-10 days")>'
+
+    job {100..130}:
+        category:       '@programming'
+        company:        'Company <current()>'
+        position:       Web Developer
+        location:       Paris, France
+        description:    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        how_to_apply:   'Send your resume to lorem.ipsum \[at] company_<current()>.sit'
+        public:         true
+        activated:      true
+        token:          'job_<current()>'
+        email:          job@example.com
