@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Job;
 use App\Form\JobType;
 use App\Repository\JobRepository;
+use App\Repository\CategoryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,9 @@ class JobController extends Controller
      * @Route("/", name="job_index", methods="GET")
      * @View\Template()
      */
-    public function index(JobRepository $jobRepository): array
+    public function index(CategoryRepository $categoryRepository): array
     {
-        return ['jobs' => $jobRepository->findActiveJobs()];
+        return ['categories' => $categoryRepository->findWithActiveJobs()];
     }
 
     /**
