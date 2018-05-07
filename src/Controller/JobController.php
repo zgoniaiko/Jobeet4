@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Job;
 use App\Form\JobType;
 use App\Repository\JobRepository;
+use App\Repository\CategoryRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +19,18 @@ class JobController extends Controller
 {
     /**
      * @Route("/", name="job_index", methods="GET")
+     * @View\Template()
      */
-    public function index(JobRepository $jobRepository): Response
+    public function index(CategoryRepository $categoryRepository): array
     {
-        return $this->render('job/index.html.twig', ['jobs' => $jobRepository->findAll()]);
+        return ['categories' => $categoryRepository->findWithActiveJobs()];
     }
 
     /**
      * @Route("/new", name="job_new", methods="GET|POST")
+     * @View\Template()
      */
-    public function new(Request $request): Response
+    public function new(Request $request)
     {
         $job = new Job();
         $form = $this->createForm(JobType::class, $job);
@@ -40,24 +44,28 @@ class JobController extends Controller
             return $this->redirectToRoute('job_index');
         }
 
-        return $this->render('job/new.html.twig', [
+        return [
             'job' => $job,
             'form' => $form->createView(),
-        ]);
+        ];
     }
 
     /**
-     * @Route("/{id}", name="job_show", methods="GET")
+     * @Route("/{id}", name="job_show", methods="GET", requirements={"id" = "\d+"})
+     * @View\Template()
+     *
+     * @View\Entity("job", expr="repository.findActiveJob(id)")
      */
-    public function show(Job $job): Response
+    public function show(Job $job): array
     {
-        return $this->render('job/show.html.twig', ['job' => $job]);
+        return ['job' => $job];
     }
 
     /**
      * @Route("/{id}/edit", name="job_edit", methods="GET|POST")
+     * @View\Template()
      */
-    public function edit(Request $request, Job $job): Response
+    public function edit(Request $request, Job $job)
     {
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
@@ -68,10 +76,10 @@ class JobController extends Controller
             return $this->redirectToRoute('job_edit', ['id' => $job->getId()]);
         }
 
-        return $this->render('job/edit.html.twig', [
+        return [
             'job' => $job,
             'form' => $form->createView(),
-        ]);
+        ];
     }
 
     /**
