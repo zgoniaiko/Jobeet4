@@ -51,7 +51,7 @@ class JobController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="job_show", methods="GET")
+     * @Route("/{id}", name="job_show", methods="GET", requirements={"id" = "\d+"})
      * @View\Template()
      */
     public function show(Job $job): array
