@@ -22,18 +22,7 @@ class JobController extends Controller
      */
     public function index(JobRepository $jobRepository): array
     {
-        $q = $this->getDoctrine()
-            ->getManagerForClass(Job::class)
-            ->createQueryBuilder('j')
-            ->from('App:Job', 'j')
-            ->select('j')
-            ->where('j.expiresAt > :expiryAt')
-            ->setParameter('expiryAt', new \DateTime())
-            ->getQuery();
-
-        $jobs = $q->getResult();
-
-        return ['jobs' => $jobs];
+        return ['jobs' => $jobRepository->findActiveJobs()];
     }
 
     /**
