@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -33,6 +34,12 @@ class Category
      * @ORM\ManyToMany(targetEntity="App\Entity\Affiliate", mappedBy="categories")
      */
     private $affiliates;
+
+    /**
+     * @ORM\Column(type="string", length=128, unique=true)
+     * @Gedmo\Slug(fields={"name"})
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -129,5 +136,17 @@ class Category
         return $this->jobs->filter(function(Job $job) {
             return $job->getExpiresAt() > new \DateTime();
         });
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
