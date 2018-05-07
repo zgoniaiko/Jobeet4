@@ -19,7 +19,6 @@ App\Entity\Job:
         activated:    true
         token:        'job_sensio_labs'
         email:        'job@example.com'
-        expiresAt:   '<dateTime("+10 days")>'
  
     job_extreme_sensio:
         category:     '@design'
@@ -45,4 +44,3 @@ App\Entity\Job:
         activated:    true
         token:        job_extreme_sensio
         email:        job@example.com
-        expiresAt:   '<dateTime("+10 days")>'
