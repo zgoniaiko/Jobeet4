@@ -47,7 +47,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="category_show", methods="GET")
+     * @Route("/{slug}", name="category_show", methods="GET")
      */
     public function show(Category $category): Response
     {
