@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +18,18 @@ class CategoryController extends Controller
 {
     /**
      * @Route("/", name="category_index", methods="GET")
+     * @View\Template()
      */
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository): array
     {
-        return $this->render('category/index.html.twig', ['categories' => $categoryRepository->findAll()]);
+        return ['categories' => $categoryRepository->findAll()];
     }
 
     /**
      * @Route("/new", name="category_new", methods="GET|POST")
+     * @View\Template()
      */
-    public function new(Request $request): Response
+    public function new(Request $request)
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -40,24 +43,26 @@ class CategoryController extends Controller
             return $this->redirectToRoute('category_index');
         }
 
-        return $this->render('category/new.html.twig', [
+        return [
             'category' => $category,
             'form' => $form->createView(),
-        ]);
+        ];
     }
 
     /**
      * @Route("/{slug}", name="category_show", methods="GET")
+     * @View\Template()
      */
-    public function show(Category $category): Response
+    public function show(Category $category): array
     {
-        return $this->render('category/show.html.twig', ['category' => $category]);
+        return ['category' => $category];
     }
 
     /**
      * @Route("/{id}/edit", name="category_edit", methods="GET|POST")
+     * @View\Template()
      */
-    public function edit(Request $request, Category $category): Response
+    public function edit(Request $request, Category $category)
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -68,14 +73,15 @@ class CategoryController extends Controller
             return $this->redirectToRoute('category_edit', ['id' => $category->getId()]);
         }
 
-        return $this->render('category/edit.html.twig', [
+        return [
             'category' => $category,
             'form' => $form->createView(),
-        ]);
+        ];
     }
 
     /**
      * @Route("/{id}", name="category_delete", methods="DELETE")
+     * @View\Template()
      */
     public function delete(Request $request, Category $category): Response
     {
