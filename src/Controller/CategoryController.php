@@ -50,7 +50,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/{slug}", name="category_show", methods="GET")
+     * @Route("/{slug}", defaults={"page": "1"}, name="category_show", methods="GET")
+     * @Route("/{slug}/{page}", requirements={"page": "[1-9]\d*"}, name="category_show_paginated", methods="GET")
+
      * @View\Template()
      */
     public function show(Category $category): array
