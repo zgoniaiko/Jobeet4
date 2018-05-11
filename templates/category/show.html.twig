@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jobs in the {{ category.name }} category{% endblock %}
+
+{% block body %}
+    <h1><a href="{{ url('category_show', {'slug': category.slug}) }}">{{ category.name }}</a></h1>
+
+    {% include 'job/_list.html.twig' with {'jobs': jobs} only %}
+
+    {% if jobs.haveToPaginate %}
+        <div class="navigation text-center">
+            {{ pagerfanta(jobs, 'twitter_bootstrap4_translated', {routeName: 'category_show_paginated', routeParams:{'slug': category.slug}}) }}
+        </div>
+    {% endif %}
+{% endblock %}
