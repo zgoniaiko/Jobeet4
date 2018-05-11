@@ -62,7 +62,7 @@ class CategoryController extends Controller
     {
         $query = $jobRepository->getActiveJobsQuery();
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
-        $paginator->setMaxPerPage(20);
+        $paginator->setMaxPerPage($this->getParameter('max_jobs_on_category'));
         $paginator->setCurrentPage($page);
 
         return [
