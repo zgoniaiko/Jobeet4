@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Job;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -25,6 +27,15 @@ class JobRepository extends ServiceEntityRepository
             ->where('j.expiresAt > :expiryAt')
             ->setParameter('expiryAt', new \DateTime())
             ->getQuery();
+    }
+
+    public function getActiveJobsPaginator(int $page, int $max = 20)
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($this->getActiveJobsQuery()));
+        $paginator->setMaxPerPage($max);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
     }
 
     /**

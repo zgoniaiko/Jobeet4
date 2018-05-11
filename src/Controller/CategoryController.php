@@ -6,8 +6,6 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use App\Repository\JobRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,10 +58,7 @@ class CategoryController extends Controller
      */
     public function show(int $page, Category $category, JobRepository $jobRepository): array
     {
-        $query = $jobRepository->getActiveJobsQuery();
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
-        $paginator->setMaxPerPage($this->getParameter('max_jobs_on_category'));
-        $paginator->setCurrentPage($page);
+        $paginator = $jobRepository->getActiveJobsPaginator($page, $this->getParameter('max_jobs_on_category'));
 
         return [
             'category' => $category,
