@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Repository\JobRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,9 +58,17 @@ class CategoryController extends Controller
 
      * @View\Template()
      */
-    public function show(Category $category): array
+    public function show(int $page, Category $category, JobRepository $jobRepository): array
     {
-        return ['category' => $category];
+        $query = $jobRepository->getActiveJobsQuery();
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
+        $paginator->setMaxPerPage(20);
+        $paginator->setCurrentPage($page);
+
+        return [
+            'category' => $category,
+            'jobs' => $paginator,
+        ];
     }
 
     /**
