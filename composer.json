@@ -25,7 +25,9 @@
         "symfony/maker-bundle": "^1.4",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "symfony/profiler-pack": "^1.0",
-        "symfony/phpunit-bridge": "^4.0"
+        "symfony/phpunit-bridge": "^4.0",
+        "symfony/browser-kit": "^4.0",
+        "symfony/css-selector": "^4.0"
     },
     "autoload": {
         "psr-4": {
